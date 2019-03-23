@@ -777,7 +777,11 @@ class MUIDataTable extends React.Component {
         };
       },
       () => {
-        this.setTableAction('filterChange');
+        if(type === 'checkbox'){
+          this.setTableAction('filterTagRemoved');
+        } else {
+          this.setTableAction('filterChange');
+        }
         if (this.options.onFilterChange) {
           this.options.onFilterChange(column, this.state.filterList);
         }
