@@ -745,6 +745,13 @@ class MUIDataTable extends React.Component {
     );
   };
 
+  applyFilters = () => {
+    this.setTableAction('applyFilter');
+    if (this.options.onApplyChange) {
+      this.options.onApplyChange(null, this.state.filterList);
+    }
+  };
+
   filterUpdate = (index, column, type) => {
     this.setState(
       prevState => {
@@ -1011,6 +1018,7 @@ class MUIDataTable extends React.Component {
             filterUpdate={this.filterUpdate}
             options={this.options}
             resetFilters={this.resetFilters}
+            applyFilters={this.applyFilters}
             searchTextUpdate={this.searchTextUpdate}
             tableRef={this.getTableContentRef}
             title={title}

@@ -130,6 +130,7 @@ class TableToolbar extends React.Component {
       filterList,
       filterUpdate,
       resetFilters,
+      applyFilters,
       searchTextUpdate,
       toggleViewColumn,
       title,
@@ -224,6 +225,7 @@ class TableToolbar extends React.Component {
                   filterData={filterData}
                   onFilterUpdate={filterUpdate}
                   onFilterReset={resetFilters}
+                  onFilterApply={applyFilters}
                 />
               }
             />

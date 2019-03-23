@@ -284,7 +284,7 @@ class TableFilter extends React.Component {
   }
 
   render() {
-    const { classes, columns, options, onFilterReset } = this.props;
+    const { classes, columns, options, onFilterReset, onFilterApply } = this.props;
     const textLabels = options.textLabels.filter;
 
     return (
@@ -300,12 +300,20 @@ class TableFilter extends React.Component {
               {textLabels.title}
             </Typography>
             <Button
-              color="primary"
               className={classes.resetLink}
               tabIndex={0}
               aria-label={textLabels.reset}
               onClick={onFilterReset}>
               {textLabels.reset}
+            </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              className={classes.resetLink}
+              tabIndex={0}
+              aria-label={textLabels.reset}
+              onClick={onFilterApply}>
+              Apply
             </Button>
           </div>
           <div className={classes.filtersSelected} />
