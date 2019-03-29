@@ -79,7 +79,9 @@ class Popover extends React.Component {
           anchorOrigin={anchorOriginSpecs}
           transformOrigin={transformOriginSpecs}
           {...providedProps}>
-          {content}
+          {
+            React.cloneElement(content, { close: this.handleRequestClose })
+          }
         </MuiPopover>
         {triggerEl}
       </React.Fragment>
