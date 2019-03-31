@@ -235,7 +235,7 @@ class TableFilter extends React.Component {
                 }}
                 label={column.name}
                 type={column.date ? "date" : "text"}
-                value={filterList[index].toString() || column.date ? new Date().toJSON().slice(0,10) : ""}
+                value={filterList[index].toString()}
                 onChange={event => this.handleTextFieldChange(event, index)}
               />
             </FormControl>

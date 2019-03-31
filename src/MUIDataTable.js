@@ -145,6 +145,7 @@ class MUIDataTable extends React.Component {
     columns: [],
     filterData: [],
     filterList: [],
+    appliedFilterList: [],
     selectedRows: {
       data: [],
       lookup: {},
@@ -731,6 +732,7 @@ class MUIDataTable extends React.Component {
 
         return {
           filterList: filterList,
+          appliedFilterList: filterList,
           displayData: this.options.serverSide
             ? prevState.displayData
             : this.getDisplayData(prevState.columns, prevState.data, filterList, prevState.searchText),
@@ -746,13 +748,15 @@ class MUIDataTable extends React.Component {
   };
 
   applyFilters = () => {
+    const { filterList } = this.state;
     this.setTableAction('applyFilter');
     if (this.options.onApplyChange) {
       this.options.onApplyChange(null, this.state.filterList);
     }
+    this.setState({ appliedFilterList: filterList });
   };
 
-  filterUpdate = (index, column, type) => {
+  filterUpdate = (index, column, type, removed=false) => {
     this.setState(
       prevState => {
         const filterList = cloneDeep(prevState.filterList);
@@ -768,13 +772,19 @@ class MUIDataTable extends React.Component {
           default:
             filterList[index] = filterPos >= 0 || column === '' ? [] : [column];
         }
-
-        return {
+        
+        var newChanges =  {
           filterList: filterList,
           displayData: this.options.serverSide
             ? prevState.displayData
             : this.getDisplayData(prevState.columns, prevState.data, filterList, prevState.searchText),
         };
+
+        if(removed){
+          newChanges['appliedFilterList'] = filterList;
+        }
+
+        return newChanges;
       },
       () => {
         if(type === 'checkbox'){
@@ -994,6 +1004,7 @@ class MUIDataTable extends React.Component {
       selectedRows,
       expandedRows,
       searchText,
+      appliedFilterList
     } = this.state;
 
     const rowCount = this.options.count || displayData.length;
@@ -1030,7 +1041,7 @@ class MUIDataTable extends React.Component {
             setTableAction={this.setTableAction}
           />
         )}
-        <TableFilterList options={this.options} filterList={filterList} filterUpdate={this.filterUpdate} />
+        <TableFilterList options={this.options} filterList={appliedFilterList} filterUpdate={this.filterUpdate} />
         <div
           style={{ position: 'relative' }}
           className={this.options.responsive === 'scroll' ? classes.responsiveScroll : null}>
