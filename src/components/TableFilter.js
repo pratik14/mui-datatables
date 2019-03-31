@@ -230,8 +230,12 @@ class TableFilter extends React.Component {
           column.filter ? (
             <FormControl className={classes.textFieldFormControl} key={index}>
               <TextField
+                InputLabelProps={{
+                  shrink: column.date,
+                }}
                 label={column.name}
-                value={filterList[index].toString() || ''}
+                type={column.date ? "date" : "text"}
+                value={filterList[index].toString() || column.date ? new Date().toJSON().slice(0,10) : ""}
                 onChange={event => this.handleTextFieldChange(event, index)}
               />
             </FormControl>
